@@ -1,0 +1,108 @@
+/* daftar buku dan buku favorit */
+.container-xxl .row .card .position-relative {
+    position: relative;
+}
+
+/* Efek hover pada card */
+.container-xxl .row .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Menambahkan transisi */
+}
+
+.container-xxl .row .card:hover {
+    transform: translateY(-5px); /* Mengangkat card sedikit */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan */
+}
+
+/* Icon heart */
+.container-xxl .row .card .position-relative .heart-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    z-index: 10;
+}
+
+/* Kategori Buku */
+.container-xxl .card .position-relative .kategori-buku {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.2); /* Latar belakang semi-transparan */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 12px; /* Mengubah ukuran teks menjadi lebih kecil */
+    transition: background-color 0.3s ease; /* Menambahkan transisi untuk latar belakang */
+}
+
+/* Efek hover pada kategori buku */
+.container-xxl .card .position-relative .kategori-buku:hover {
+    background-color: rgba(0, 0, 0, 0.4); /* Ganti latar belakang saat hover */
+}
+
+/* dashboard */
+.container-xxl .row .card .peraturan-list {
+    padding-left: 0;
+    /* Menghapus padding default di kiri */
+    margin: 0;
+    /* Menghapus margin default */
+    list-style-type: none;
+    /* Menghilangkan bullet point dari list */
+}
+
+.container-xxl .row .card .peraturan-list li {
+    font-size: 0.8rem;
+    /* Ukuran font diperbesar sedikit */
+    line-height: 1;
+    /* Jarak antar baris lebih longgar agar mudah dibaca */
+    padding-left: 2rem;
+    /* Memberikan jarak untuk ikon di sebelah kiri */
+    position: relative;
+    /* Agar ikon berada di posisi yang tepat */
+    margin-bottom: 0.6rem;
+    /* Mengurangi jarak antar item list agar lebih rapat */
+    color: #333;
+    /* Warna teks lebih gelap untuk kontras yang lebih baik */
+    text-align: justify;
+    /* Justify text agar rata kiri dan kanan */
+}
+
+.container-xxl .row .card .peraturan-list li i {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.3rem;
+    /* Ukuran ikon disesuaikan */
+    color: #28a745;
+    /* Warna hijau pada ikon */
+}
+
+.container-xxl .row .card .peraturan-list li strong {
+    font-weight: 600;
+    /* Menebalkan teks yang penting */
+    color: #333;
+    /* Warna lebih gelap untuk teks tebal */
+}
+
+.container-xxl .row .card .card-body p {
+    font-size: 1rem;
+    /* Ukuran teks untuk paragraf */
+    color: #333;
+    /* Warna teks gelap */
+    margin-bottom: 1.5rem;
+    /* Jarak di bawah paragraf */
+}
+
+.container-xxl .row .card .card-body {
+    padding: 2rem;
+    /* Padding dalam card */
+    text-align: left;
+    /* Menyelaraskan teks kiri */
+}
+
+.container-xxl .row .card .card-body strong i {
+    color: red;
+    font-size: 1.5rem;
+}
