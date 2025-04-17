@@ -59,15 +59,16 @@ class FrontendController extends Controller
         return view('frontend.home', compact('buku', 'user', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel'));
     }
 
-    // dafttar buku
+    // daftar buku
     public function daftarBuku()
     {
 
         $buku = Buku::all();
+        $kategori = Kategori::all();
         $user = Auth::user();
         $favorit = $user->Favorit()->pluck('id_buku')->toArray();
 
-        return view('frontend.buku.daftar', compact('buku', 'user', 'favorit'));
+        return view('frontend.buku.daftar', compact('buku', 'kategori', 'user', 'favorit'));
     }
 
     // detail buku
@@ -224,6 +225,15 @@ class FrontendController extends Controller
         return back()->withInput();
     }
 
+
+    // daftar arikel
+    public function daftarArtikel()
+    {
+        $artikel = Artikel::all();
+        $user = Auth::user();
+
+        return view('frontend.daftarArtikel', compact('artikel', 'user'));
+    }
 
 
 }

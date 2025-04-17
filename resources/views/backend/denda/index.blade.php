@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('title', 'History peminjaman')
+@section('title', 'Data denda')
 
 @section('content')
     <section class="section">
@@ -17,7 +17,7 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="tablePeminjaman" class="table">
+                            <table id="tableDenda" class="table">
                                 <thead>
                                     <tr>
                                         <th class="text-left" scope="col">#</th>
@@ -51,9 +51,10 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#modelPengajuan{{ $item->id }}" title="Lihat">
-                                                    <i class="bi bi-eye-fill"></i>
+                                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#pembayaranDendaManual{{ $item->id }}"
+                                                    title="Lihat">
+                                                    Bayar
                                                 </button>
                                             </td>
                                         </tr>
@@ -67,3 +68,52 @@
         </div>
     </section>
 @endsection
+
+@foreach ($denda as $item)
+    <div class="modal fade" id="pembayaranDendaManual{{ $item->id }}" tabindex="-1"
+        aria-labelledby="pembayaranDendaManualLabel{{ $item->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pembayaranDendaManualLabel{{ $item->id }}">Pembayaran Manual Denda
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('pembayaran.manual') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id_denda" value="{{ $item->id }}">
+
+                        <div class="d-flex justify-content-between">
+                            <div class="mb-3 me-3" style="width: 50%;">
+                                <label class="form-label">Nama</label>
+                                <h6>{{ $item->peminjamanBuku->user->name }}</h6>
+                            </div>
+                            <div class="mb-3" style="width: 50%;">
+                                <label class="form-label">Total Denda</label>
+                                <h6>Rp {{ number_format($item->totalDenda, 0, ',', '.') }}</h6>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="metodePembayaran" class="form-label">Metode Pembayaran</label>
+                            <input type="text" class="form-control" id="metodePembayaran" name="metodePembayaran"
+                                placeholder="Contoh: Tunai, Transfer, dll">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="catatan" class="form-label">Catatan</label>
+                            <textarea class="form-control" name="catatan" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-2">
+                            <button class="btn btn-sm btn-success" type="submit">Simpan</button>
+                            <button class="btn btn-sm btn-secondary" type="button"
+                                data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach

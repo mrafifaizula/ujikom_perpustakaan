@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Denda;
 use App\Models\Kategori;
+use App\Models\User;
 use Auth;
 use App\Models\Buku;
 use App\Models\Favorit;
@@ -167,6 +169,21 @@ class ProfilController extends Controller
         Alert::success('Success', 'Buku favorit berhasil dihapus')->autoClose(2000);
         return redirect()->back();
     }
+
+    public function dendaUser($name)
+    {
+        $user = Auth::user();
+        $user = User::where('name', $name)->firstOrFail();
+        $dendaUser = Denda::where('statusPembayaran', 'belum')
+            ->whereHas('peminjamanBuku', function ($query) use ($user) {
+                $query->where('id_user', $user->id);
+            })
+            ->get();
+
+
+        return view('profil.dendaUser', compact('dendaUser', 'user'));
+    }
+
 
 
 }

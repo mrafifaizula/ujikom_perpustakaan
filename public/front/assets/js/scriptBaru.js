@@ -60,3 +60,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 // end button di ganti sama a di ulasan
+
+// start shortir buku sesuai kategori
+function handleTabChange(select) {
+    filterBooks();
+}
+
+function filterByTitle() {
+    filterBooks();
+}
+
+function filterBooks() {
+    const selectedGenre = document
+        .getElementById("genreDropdown")
+        .value.toLowerCase()
+        .replace("#", "");
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const semuaBuku = document.querySelectorAll(".col-md-3");
+
+    semuaBuku.forEach((book) => {
+        const bookGenre = book.getAttribute("data-kategor").toLowerCase();
+        const judul = book.querySelector("h3").textContent.toLowerCase();
+
+        const matchGenre =
+            selectedGenre === "semua-kategori" || bookGenre === selectedGenre;
+        const matchTitle = judul.includes(input);
+
+        if (matchGenre && matchTitle) {
+            book.style.display = "block";
+        } else {
+            book.style.display = "none";
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    filterBooks();
+});
+// end shortir buku sesuai kategori

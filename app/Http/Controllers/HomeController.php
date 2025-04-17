@@ -126,7 +126,8 @@ class HomeController extends Controller
         $bukuTerbaru = Buku::orderBy('created_at', 'desc')->take(3)->get();
         $artikelTerbaru = Artikel::orderBy('created_at', 'desc')->take(3)->get();
         $bukuCoursel = Buku::orderBy('created_at', 'desc')->take(5)->get();
-        $totalDenda = Denda::sum('totalDenda');
+        $totalDenda = Denda::where('statusPembayaran', 'belum')->sum('totalDenda');
+        $totalPendapatan = Denda::where('statusPembayaran', 'sudah')->sum('totalDenda');
 
         $today = Carbon::today();
         $userBaruHariIni = User::whereDate('created_at', $today)->count();
@@ -139,11 +140,11 @@ class HomeController extends Controller
 
 
         if ($user->role === 'admin') {
-            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
+            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
         } elseif ($user->role === 'staf') {
-            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
+            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
         } else {
-            return view('frontend.home', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
+            return view('frontend.home', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
         }
     }
 }

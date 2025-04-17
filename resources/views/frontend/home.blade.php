@@ -240,8 +240,7 @@
 
                     <div class="row">
                         <div class="btn-wrap align-center">
-                            <a href="#" class="btn btn-outline-accent btn-accent-arrow" tabindex="0">Read All
-                                Articles<i class="icon icon-ns-arrow-right"></i></a>
+                            <a href="{{url('user/daftar-artikel')}}" class="btn btn-outline-accent btn-accent-arrow" tabindex="0">Lihat semua artikel<i class="icon icon-ns-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

@@ -39,6 +39,17 @@
                                     <li class="{{ request()->is('user/riwayat-peminjaman') ? 'active' : '' }}">
                                         <a href="{{ url('user/riwayat-peminjaman') }}">Riwayat Peminjaman</a>
                                     </li>
+                                    <li class="{{ request()->is('user/daftar-artikel') ? 'active' : '' }}">
+                                        <a href="{{ url('user/daftar-artikel') }}">Daftar Artikel</a>
+                                    </li>
+                                    <li
+                                        class="{{ request()->is('profil/data-peminjaman/' . $user->name) ? 'active' : '' }}">
+                                        <a href="{{ url('profil/data-peminjaman/' . $user->name) }}">Data
+                                            Peminjaman</a>
+                                    </li>
+                                    <li class="{{ request()->is('profil/denda/' . $user->name) ? 'active' : '' }}">
+                                        <a href="{{ url('profil/denda/' . $user->name) }}">Data Denda</a>
+                                    </li>
                                 </ul>
 
                             </li>

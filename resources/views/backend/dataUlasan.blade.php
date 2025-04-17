@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('title', 'Data buku yang dipinjam')
+@section('title', 'Data ulasan')
 
 @section('content')
     <section class="section">

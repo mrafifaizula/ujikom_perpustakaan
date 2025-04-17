@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="myTable1" class="table">
+                            <table id="tableArtikel" class="table">
                                 <thead>
                                     <tr>
                                         <th class="text-left" scope="col">#</th>

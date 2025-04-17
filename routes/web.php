@@ -75,26 +75,26 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'cek.denda.telat', '
     Route::post('import/buku', [BukuController::class, 'importExcel'])->name('import.buku');
     Route::get('export/buku', [BukuController::class, 'exportCsv'])->name('export.buku');
 
+    // excel kelas
+    Route::get('import/artikel', [ArtikelController::class, 'import']);
+    Route::post('import/artikel', [ArtikelController::class, 'importExcel'])->name('import.artikel');
+    Route::get('export/artikel', [ArtikelController::class, 'exportCsv'])->name('export.artikel');
+
     // data ulasan
     Route::get('data-ulasan', [BackendController::class, 'dataUlasan']);
 
     // denda
     Route::get('denda', [BackendController::class, 'dataDenda']);
+
+    // pembayaran manual
+    Route::post('danda/pembayaran-manual', [BackendController::class, 'pembayaranDendaManual'])->name('pembayaran.manual');
+
 });
 
 
-Route::group(['prefix' => 'profil', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'profil', 'middleware' => ['auth', 'cek.denda.telat']], function () {
     Route::get('dashboard', [ProfilController::class, 'dashboard']);
     Route::get('profil', [ProfilController::class, 'profil']);
-    Route::get('daftar-buku', [ProfilController::class, 'daftarBuku'])->name('daftar.buku');
-    Route::get('detail-buku/{judul}', [ProfilController::class, 'detailBuku']);
-
-    // peminjaman buku
-    Route::get('pinjam-buku/{judul}', [FrontendController::class, 'showPinjamBuku']);
-    Route::post('pinjam-buku/{judul}', [FrontendController::class, 'pinjamBuku'])->name('pinjam.buku');
-
-    // data peminjaman
-    Route::get('data-peminjaman/{name}', [ProfilController::class, 'dataPeminjaman'])->name('data.peminjaman');
 
     // pengembalian buku
     Route::post('ajukan-pengembalian/{id}', [ProfilController::class, 'ajukanPengembalian'])->name('ajukan.pengembalian');
@@ -102,12 +102,21 @@ Route::group(['prefix' => 'profil', 'middleware' => ['auth']], function () {
     Route::post('batal-pengembalian/{id}', [ProfilController::class, 'batalPengembalian'])->name('batal.pengembalian');
     // membatalkan peminjaman buku
     Route::delete('batal-peminjaman/{id}', [ProfilController::class, 'batalPeminjaman'])->name('batal.peminjaman');
+
+    // data peminjaman
+    Route::get('data-peminjaman/{name}', [ProfilController::class, 'dataPeminjaman'])->name('data.peminjaman');
+
+    // denda
+    Route::get('denda/{name}', [ProfilController::class, 'dendaUser']);
 });
+
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
     Route::get('home', [FrontendController::class, 'home']);
     Route::get('daftar-buku', [FrontendController::class, 'daftarBuku']);
     Route::get('detail-buku/{judul}', [FrontendController::class, 'detailBuku']);
+
+    Route::get('daftar-artikel', [FrontendController::class, 'daftarArtikel']);
 
     // peminjaman buku
     Route::get('pinjam-buku/{judul}', [FrontendController::class, 'showPinjamBuku']);

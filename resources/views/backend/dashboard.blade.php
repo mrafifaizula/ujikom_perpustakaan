@@ -104,7 +104,8 @@
                             Denda</h6>
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <div class="d-flex align-items-center">
-                                <h4 class="text-dark mb-0" style="font-size: 18px;">Rp0</h4>
+                                <h4 class="text-dark mb-0" style="font-size: 18px;">Rp
+                                    {{ number_format($totalPendapatan, 0, ',', '.') }}</h4>
                             </div>
                             <div class="rounded-circle bg-success d-flex justify-content-center align-items-center shadow-sm"
                                 style="width: 30px; height: 30px; position: relative;">

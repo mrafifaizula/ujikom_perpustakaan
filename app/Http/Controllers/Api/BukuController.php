@@ -11,20 +11,14 @@ class BukuController extends Controller
 {
     public function index()
     {
-        // Ambil semua data buku
-        $buku = Buku::all()->map(function ($item) {
-            // Memastikan fotoBuku memiliki URL lengkap
-            if (!Str::startsWith($item->fotoBuku, 'http')) {
-                $item->fotoBuku = url('images/buku/' . $item->fotoBuku);  // Menghasilkan URL lengkap
-            }
-            return $item;
-        });
+        $buku = Buku::all();
 
-        // Mengembalikan data buku dalam format JSON
-        return response()->json(['buku' => $buku->toArray()]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Daftar Buku',
+            'data' => $buku,
+        ], 200);
     }
-
-
 
     public function show($id)
     {

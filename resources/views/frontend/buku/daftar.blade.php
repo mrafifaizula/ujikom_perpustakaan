@@ -4,9 +4,6 @@
     <link rel="stylesheet" href="{{ asset('front/assets/css/styleBaru.css') }}">
 @endsection
 
-<style>
-
-</style>
 
 @section('content')
     <section id="daftar-buku" class="bookshelf py-5 my-5">
@@ -18,20 +15,28 @@
                         <h2 class="section-title">Daftar Buku</h2>
                     </div>
 
-                    <ul class="tabs">
-                        <li data-tab-target="#all-genre" class="active tab">All Genre</li>
-                        <li data-tab-target="#business" class="tab">Business</li>
-                        <li data-tab-target="#technology" class="tab">Technology</li>
-                        <li data-tab-target="#romantic" class="tab">Romantic</li>
-                        <li data-tab-target="#adventure" class="tab">Adventure</li>
-                        <li data-tab-target="#fictional" class="tab">Fictional</li>
-                    </ul>
+                    <div class="filter-bar">
+                        <!-- Input Cari Buku -->
+                        <div class="search-wrapper">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari judul buku..."
+                                onkeyup="filterByTitle()">
+                            <i class="bi bi-search search-icon"></i>
+                        </div>
+
+                        <!-- Dropdown Kategori -->
+                        <select id="genreDropdown" onchange="handleTabChange(this)">
+                            <option value="#semua-kategori" selected>Semua Kategori</option>
+                            @foreach ($kategori as $item)
+                                <option value="#{{ $item->namaKategori }}">{{ $item->namaKategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="tab-content">
-                        <div id="all-genre" data-tab-content class="active">
+                        <div id="semua-kategori" data-tab-content class="active">
                             <div class="row">
                                 @foreach ($buku as $item)
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" data-kategor="{{ $item->kategori->namaKategori }}">
                                         <div class="product-item">
                                             <figure class="product-style">
                                                 <div class="book-favorite">
@@ -45,22 +50,18 @@
                                                 <h3>{{ $item->judul }}</h3>
                                                 <div class="button-group">
                                                     <a href="{{ url('user/detail-buku', $item->judul) }}"
-                                                        class="btn btn-sm btn-detail" data-tooltip="Detail buku">
-                                                        Detail
-                                                    </a>
+                                                        class="btn btn-sm btn-detail" data-tooltip="Detail buku">Detail</a>
                                                     <a href="{{ url('user/pinjam-buku', $item->judul) }}"
-                                                        class="btn btn-sm btn-detail" data-tooltip="Pinjam Buku">
-                                                        Pinjam
-                                                    </a>
+                                                        class="btn btn-sm btn-detail" data-tooltip="Pinjam Buku">Pinjam</a>
                                                     <a href="{{ route('tambah.favorit', $item->judul) }}"
-                                                        class="btn btn-sm btn-detail" data-tooltip="Tambah Buku Favorit">
-                                                        Favorit
-                                                    </a>
+                                                        class="btn btn-sm btn-detail"
+                                                        data-tooltip="Tambah Buku Favorit">Favorit</a>
                                                 </div>
                                             </figcaption>
                                         </div>
                                     </div>
                                 @endforeach
+
                             </div>
                         </div>
                     </div>

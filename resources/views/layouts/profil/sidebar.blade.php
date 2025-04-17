@@ -64,6 +64,10 @@
             </a>
         </li>
 
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Pages</span>
+        </li>
+
         {{-- profil --}}
         <li class="menu-item {{ request()->is('profil/profil') ? 'active' : '' }}">
             <a href="{{ url('profil/profil') }}" class="menu-link">
@@ -93,6 +97,13 @@
             <a href="{{ url('profil/data-peminjaman/' . $user->name) }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-check-circle'></i>
                 <div data-i18n="Analytics">Data peminjaman</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->is('profil/denda/' . $user->name) ? 'active' : '' }}">
+            <a href="{{ url('profil/denda/' . $user->name) }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-money'></i>
+                <div data-i18n="Analytics">Denda</div>
             </a>
         </li>
     </ul>

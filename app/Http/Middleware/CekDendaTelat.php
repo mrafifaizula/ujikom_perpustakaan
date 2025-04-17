@@ -27,6 +27,10 @@ class CekDendaTelat
                 if ($today->greaterThan($batas)) {
                     $hariTelat = $batas->diffInDays($today); // hitung berapa hari telat
 
+                    $jumlahBuku = $peminjaman->jumlah ?? 1; // fallback ke 1 kalau tidak ada
+
+                    $totalDenda = $hariTelat * 10000 * $jumlahBuku;
+
                     $denda = Denda::where('id_peminjaman', $peminjaman->id)
                         ->where('jenisDenda', 'telat')
                         ->first();
@@ -34,7 +38,7 @@ class CekDendaTelat
                     if (!$denda) {
                         // Buat denda baru
                         Denda::create([
-                            'totalDenda' => $hariTelat * 10000,
+                            'totalDenda' => $totalDenda,
                             'statusPembayaran' => 'belum',
                             'jenisDenda' => 'telat',
                             'hariTelat' => $hariTelat,
@@ -45,7 +49,7 @@ class CekDendaTelat
                         // Update denda yang sudah ada
                         $denda->update([
                             'hariTelat' => $hariTelat,
-                            'totalDenda' => $hariTelat * 10000,
+                            'totalDenda' => $totalDenda,
                         ]);
                     }
                 }

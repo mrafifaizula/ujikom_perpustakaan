@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Denda;
 use App\Models\Favorit;
+use App\Models\PembayaranManual;
 use App\Models\siswa;
 use App\Models\Ulasan;
 use App\Models\User;
@@ -192,6 +193,32 @@ class BackendController extends Controller
         $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
         return view('backend.denda.index', compact('denda', 'user', 'notifPengajuanSidebar'));
+    }
+
+    // pembayaran denda manual
+    public function pembayaranDendaManual(Request $request)
+    {
+        $request->validate([
+            'id_denda' => 'required|exists:dendas,id',
+            'metodePembayaran' => 'nullable|string|max:255',
+            'catatan' => 'nullable|string',
+        ]);
+
+        // Simpan ke tabel pembayaran manual
+        PembayaranManual::create([
+            'id_denda' => $request->id_denda,
+            'tanggalPembayaran' => now(),
+            'metodePembayaran' => $request->metodePembayaran,
+            'catatan' => $request->catatan,
+        ]);
+
+        // Update status pembayaran di tabel denda (opsional)
+        $denda = Denda::findOrFail($request->id_denda);
+        $denda->statusPembayaran = 'sudah';
+        $denda->save();
+
+        Alert::success('Berhasil', 'Pembabayran Berhasil')->autoClose(2000);
+        return redirect()->back();
     }
 
 }

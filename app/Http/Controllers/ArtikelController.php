@@ -111,4 +111,69 @@ class ArtikelController extends Controller
         Alert::success('Success', 'Data Berhasil Di Hapus')->autoClose(2000);
         return redirect()->route('artikel.index');
     }
+
+
+    public function import()
+    {
+        $artikel = Artikel::all();
+        $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
+        return view('backend.artikel.importExcel', compact('artikel', 'user', 'notifPengajuanSidebar'));
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+        $file = $request->file('file');
+        $handle = fopen($file, "r");
+
+        $duplikasi = [];
+
+        if ($handle !== false) {
+            while (($row = fgetcsv($handle, 1000, ",")) !== false) {
+                $namaKategori = trim($row[0]);
+
+                if (!empty($namaKategori) && $namaKategori != "Nama Kategori") {
+                    // Cek apakah kategori sudah ada
+                    if (Kategori::where('namaKategori', $namaKategori)->exists()) {
+                        $duplikasi[] = $namaKategori;
+                    } else {
+                        Kategori::create(['namaKategori' => $namaKategori]);
+                    }
+                }
+            }
+            fclose($handle);
+        }
+
+        if (!empty($duplikasi)) {
+            Alert::warning('Warning', 'Beberapa kategori sudah ada: ' . implode(", ", $duplikasi))->autoClose(4000);
+        } else {
+            Alert::success('Success', 'Data berhasil diimport')->autoClose(2000);
+        }
+
+        return redirect()->route('kategori.index');
+    }
+
+    public function exportCsv()
+    {
+        $fileName = 'artikel.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['Nama artikel', 'Deskripsi', 'Image']);
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
