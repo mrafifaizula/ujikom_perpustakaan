@@ -4,7 +4,7 @@
 
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="index.html">Perpustakaan</a>
+        <a href="index.html">BOOKSAW</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
         <a href="index.html">Ps</a>
@@ -16,7 +16,12 @@
         </li>
         <li class="menu-header">Tables</li>
         <li class="nav-item {{ request()->is('admin/denda') ? 'active' : '' }}">
-            <a href="{{ url('admin/denda') }}" class="nav-link"><i class="bi bi-cash"></i></i><span>Denda</span></a>
+            <a href="{{ url('admin/denda') }}" class="nav-link"><i class="bi bi-cash"></i><span>Denda</span></a>
+        </li>
+        <li class="nav-item {{ request()->is('admin/history-pembayaran') ? 'active' : '' }}">
+            <a href="{{ url('admin/history-pembayaran') }}" class="nav-link"><i
+                    class="bi bi-credit-card"></i><span>History
+                    Pembayaran</span></a>
         </li>
         <li class="dropdown {{ request()->is('admin/user', 'admin/siswa') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="bi bi-people-fill"></i>

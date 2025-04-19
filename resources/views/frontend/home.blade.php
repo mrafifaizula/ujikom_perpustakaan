@@ -1,5 +1,7 @@
 @extends('layouts.frontend')
 
+@section('title', 'Home')
+
 @section('content')
     <section id="billboard">
         <div class="container">

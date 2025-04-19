@@ -33,7 +33,8 @@ class BackendController extends Controller
         $totalUlasan = Ulasan::count();
         $totalPeminjaman = PeminjamanBuku::where('status', 'diterima')->count();
         $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
-        $totalDenda = Denda::sum('totalDenda');
+        $totalDenda = Denda::where('statusPembayaran', 'belum')->sum('totalDenda');
+        $totalPendapatan = Denda::where('statusPembayaran', 'sudah')->sum('totalDenda');
 
         $today = Carbon::today();
         $userBaruHariIni = User::whereDate('created_at', $today)->count();
@@ -42,7 +43,7 @@ class BackendController extends Controller
             ->count();
         $pengembalianHariIni = PengembalianBuku::whereDate('created_at', $today)
             ->count();
-        $jatuhTempo = Denda::count();
+        $jatuhTempo = Denda::where('statusPembayaran', 'belum')->count();
 
         $peminjamanPerBulan = PeminjamanBuku::where('status', 'selesai')
             ->selectRaw('MONTH(created_at) as bulan, COUNT(*) as total')
@@ -75,7 +76,7 @@ class BackendController extends Controller
         $bulan = $namaBulanLengkap[$tanggalSekarang->month];
         $tanggalFormat = $tanggalSekarang->day . ' ' . $bulan . ' ' . $tanggalSekarang->year;
 
-        return view('backend.dashboard', compact('bukuCount', 'penulisCount', 'penerbitCount', 'kategoriCount', 'siswaCount', 'totalStaf', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'user', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
+        return view('backend.dashboard', compact('bukuCount', 'penulisCount', 'penerbitCount', 'kategoriCount', 'siswaCount', 'totalStaf', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'user', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
     }
 
 
@@ -188,7 +189,7 @@ class BackendController extends Controller
 
     public function dataDenda()
     {
-        $denda = Denda::all();
+        $denda = Denda::where('statusPembayaran', 'belum')->get();
         $user = Auth::user();
         $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
@@ -204,7 +205,6 @@ class BackendController extends Controller
             'catatan' => 'nullable|string',
         ]);
 
-        // Simpan ke tabel pembayaran manual
         PembayaranManual::create([
             'id_denda' => $request->id_denda,
             'tanggalPembayaran' => now(),
@@ -212,13 +212,23 @@ class BackendController extends Controller
             'catatan' => $request->catatan,
         ]);
 
-        // Update status pembayaran di tabel denda (opsional)
         $denda = Denda::findOrFail($request->id_denda);
         $denda->statusPembayaran = 'sudah';
         $denda->save();
 
         Alert::success('Berhasil', 'Pembabayran Berhasil')->autoClose(2000);
         return redirect()->back();
+    }
+
+
+    // history pembayaran
+    public function histoyPembayaran()
+    {
+        $denda = Denda::where('statusPembayaran', 'sudah')->get();
+        $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
+        return view('backend.historyPembayaran', compact('denda', 'user', 'notifPengajuanSidebar'));
     }
 
 }

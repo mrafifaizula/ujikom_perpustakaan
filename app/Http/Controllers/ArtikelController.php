@@ -134,29 +134,50 @@ class ArtikelController extends Controller
         $duplikasi = [];
 
         if ($handle !== false) {
-            while (($row = fgetcsv($handle, 1000, ",")) !== false) {
-                $namaKategori = trim($row[0]);
+            $isFirstRow = true;
 
-                if (!empty($namaKategori) && $namaKategori != "Nama Kategori") {
-                    // Cek apakah kategori sudah ada
-                    if (Kategori::where('namaKategori', $namaKategori)->exists()) {
-                        $duplikasi[] = $namaKategori;
+            while (($row = fgetcsv($handle, 1000, ";")) !== false) {
+                // Skip header
+                if ($isFirstRow) {
+                    $isFirstRow = false;
+                    continue;
+                }
+
+                // Pastikan minimal ada 3 kolom
+                if (count($row) < 3) {
+                    continue;
+                }
+
+                $judul = trim($row[0]);
+                $deskripsi = trim($row[1]);
+                $gambar = trim($row[2]);
+
+                if (!empty($judul)) {
+                    if (Artikel::where('judul', $judul)->exists()) {
+                        $duplikasi[] = $judul;
                     } else {
-                        Kategori::create(['namaKategori' => $namaKategori]);
+                        Artikel::create([
+                            'judul' => $judul,
+                            'deskripsi' => $deskripsi,
+                            'gambar' => $gambar ?: 'default.jpg', // Optional: isi default kalau kosong
+                        ]);
                     }
                 }
             }
+
             fclose($handle);
         }
 
+        // Feedback
         if (!empty($duplikasi)) {
-            Alert::warning('Warning', 'Beberapa kategori sudah ada: ' . implode(", ", $duplikasi))->autoClose(4000);
+            Alert::warning('Duplikat', 'Beberapa artikel sudah ada: ' . implode(', ', $duplikasi))->autoClose(4000);
         } else {
-            Alert::success('Success', 'Data berhasil diimport')->autoClose(2000);
+            Alert::success('Berhasil', 'Data artikel berhasil diimpor')->autoClose(2000);
         }
 
-        return redirect()->route('kategori.index');
+        return redirect()->route('artikel.index'); // Ganti kalau route-nya beda
     }
+
 
     public function exportCsv()
     {
@@ -169,11 +190,13 @@ class ArtikelController extends Controller
 
         $callback = function () {
             $file = fopen('php://output', 'w');
-            fputcsv($file, ['Nama artikel', 'Deskripsi', 'Image']);
+
+            fputcsv($file, ['judul artikelss', 'Deskripsi', 'Image'], ';');
 
             fclose($file);
         };
 
         return response()->stream($callback, 200, $headers);
     }
+
 }

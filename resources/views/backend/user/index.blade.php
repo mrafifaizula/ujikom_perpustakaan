@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="myTable" class="table">
+                            <table id="tableArtikel" class="table">
                                 <thead>
                                     <tr>
                                         <th class="text-left" scope="col">#</th>
@@ -34,7 +34,7 @@
                                 <tbody>
                                     @foreach ($user as $item)
                                         <tr>
-                                            <th class="text-left" scope="row">{{ $no++ }}  </th>
+                                            <th class="text-left" scope="row">{{ $no++ }} </th>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->role }}</td>

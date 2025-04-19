@@ -14,4 +14,9 @@ class Denda extends Model
     {
         return $this->belongsTo(PeminjamanBuku::class, 'id_peminjaman');
     }
+
+    public function pembayaranManual()
+    {
+        return $this->hasMany(PembayaranManual::class, 'id_denda');
+    }
 }

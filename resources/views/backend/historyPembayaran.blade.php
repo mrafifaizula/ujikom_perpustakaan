@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('title', 'Data denda')
+@section('title', 'History Pembayaran')
 
 @section('content')
     <section class="section">
@@ -97,23 +97,19 @@
 
                         <div class="mb-3">
                             <label for="metodePembayaran" class="form-label">Metode Pembayaran</label>
-                            <select class="form-control" id="metodePembayaran" name="metodePembayaran" required>
-                                <option value="">-- Pilih Metode Pembayaran --</option>
-                                <option value="Tunai">Tunai</option>
-                                <option value="Transfer">Transfer</option>
-                                <option value="E-Wallet">E-Wallet</option>
-                                <option value="QRIS">QRIS</option>
-                            </select>
+                            <input type="text" class="form-control" id="metodePembayaran" name="metodePembayaran"
+                                placeholder="Contoh: Tunai, Transfer, dll">
                         </div>
 
                         <div class="mb-3">
                             <label for="catatan" class="form-label">Catatan</label>
-                            <textarea class="form-control" name="catatan" rows="3" style="height: 100px"></textarea>
+                            <textarea class="form-control" name="catatan" rows="3"></textarea>
                         </div>
 
                         <div class="mb-2">
                             <button class="btn btn-sm btn-success" type="submit">Simpan</button>
-                            <button class="btn btn-sm btn-warning" type="reset">Reset</button>
+                            <button class="btn btn-sm btn-secondary" type="button"
+                                data-bs-dismiss="modal">Batal</button>
                         </div>
                     </form>
                 </div>

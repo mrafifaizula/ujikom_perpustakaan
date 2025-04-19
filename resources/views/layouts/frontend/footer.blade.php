@@ -3,111 +3,103 @@
         <div class="row">
 
             <div class="col-md-4">
-
                 <div class="footer-item">
                     <div class="company-brand">
                         <img src="{{ asset('front/assets/images/main-logo.png') }}" alt="logo" class="footer-logo">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis sed ptibus liberolectus
-                            nonet psryroin. Amet sed lorem posuere sit iaculis amet, ac urna. Adipiscing fames
-                            semper erat ac in suspendisse iaculis.</p>
+                        <p>Selamat datang di Perpustakaan Digital kami! Kami menyediakan berbagai koleksi buku untuk
+                            dibaca dan dipinjam secara online. Temukan pengetahuan, inspirasi, dan hiburan dalam setiap
+                            halaman yang Anda jelajahi bersama kami.</p>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-md-2">
-
                 <div class="footer-menu">
-                    <h5>About Us</h5>
+                    <h5>Tentang Kami</h5>
                     <ul class="menu-list">
                         <li class="menu-item">
-                            <a href="#">vision</a>
+                            <a href="#">Visi & Misi</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">articles </a>
+                            <a href="#">Profil Perpustakaan</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">careers</a>
+                            <a href="#">Tim Kami</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">service terms</a>
+                            <a href="#">Kebijakan Layanan</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">donate</a>
+                            <a href="#">Donasi Buku</a>
                         </li>
                     </ul>
                 </div>
-
             </div>
-            <div class="col-md-2">
 
+            <div class="col-md-2">
                 <div class="footer-menu">
-                    <h5>Discover</h5>
+                    <h5>Jelajahi</h5>
                     <ul class="menu-list">
                         <li class="menu-item">
-                            <a href="#">Home</a>
+                            <a href="#">Beranda</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Books</a>
+                            <a href="#">Katalog Buku</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Authors</a>
+                            <a href="#">Penulis</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Subjects</a>
+                            <a href="#">Kategori</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Advanced Search</a>
+                            <a href="#">Pencarian Lanjutan</a>
                         </li>
                     </ul>
                 </div>
-
             </div>
-            <div class="col-md-2">
 
+            <div class="col-md-2">
                 <div class="footer-menu">
-                    <h5>My account</h5>
+                    <h5>Akun Saya</h5>
                     <ul class="menu-list">
                         <li class="menu-item">
-                            <a href="#">Sign In</a>
+                            <a href="#">Masuk</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">View Cart</a>
+                            <a href="#">Riwayat Peminjaman</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">My Wishtlist</a>
+                            <a href="#">Daftar Favorit</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Track My Order</a>
+                            <a href="#">Status Pengembalian</a>
                         </li>
                     </ul>
                 </div>
-
             </div>
-            <div class="col-md-2">
 
+            <div class="col-md-2">
                 <div class="footer-menu">
-                    <h5>Help</h5>
+                    <h5>Bantuan</h5>
                     <ul class="menu-list">
                         <li class="menu-item">
-                            <a href="#">Help center</a>
+                            <a href="#">Pusat Bantuan</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Report a problem</a>
+                            <a href="#">Lapor Masalah</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Suggesting edits</a>
+                            <a href="#">Usulkan Buku</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">Contact us</a>
+                            <a href="#">Hubungi Kami</a>
                         </li>
                     </ul>
                 </div>
-
             </div>
 
         </div>
         <!-- / row -->
-
     </div>
 </footer>

@@ -78,6 +78,17 @@ class ProfilController extends Controller
     {
         $peminjamanBuku = PeminjamanBuku::findOrFail($id);
 
+        // Cek apakah ada denda yang belum dibayar (statusPembayaran = 'belum')
+        $dendaBelumLunas = $peminjamanBuku->denda()
+            ->where('statusPembayaran', 'belum')
+            ->exists();
+
+        if ($dendaBelumLunas) {
+            Alert::error('Gagal', 'Masih ada denda yang belum dibayar')->autoClose(3000);
+            return redirect()->back();
+        }
+
+        // Kalau semua aman, lanjut ajukan pengembalian
         $peminjamanBuku->update([
             'status' => 'menunggu'
         ]);
@@ -85,6 +96,7 @@ class ProfilController extends Controller
         Alert::success('Success', 'Pengembalian berhasil diajukan')->autoClose(2000);
         return redirect()->back();
     }
+
 
     // membatalkan pengembalian
     public function batalPengembalian($id)

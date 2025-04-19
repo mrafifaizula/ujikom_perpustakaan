@@ -1,5 +1,7 @@
 @extends('layouts.frontend')
 
+@section('title', 'Daftar Buku')
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('front/assets/css/styleBaru.css') }}">
 @endsection
@@ -53,7 +55,7 @@
                                                         class="btn btn-sm btn-detail" data-tooltip="Detail buku">Detail</a>
                                                     <a href="{{ url('user/pinjam-buku', $item->judul) }}"
                                                         class="btn btn-sm btn-detail" data-tooltip="Pinjam Buku">Pinjam</a>
-                                                    <a href="{{ route('tambah.favorit', $item->judul) }}"
+                                                    <a href="{{ Auth::check() ? route('tambah.favorit', $item->judul) : route('login') }}"
                                                         class="btn btn-sm btn-detail"
                                                         data-tooltip="Tambah Buku Favorit">Favorit</a>
                                                 </div>

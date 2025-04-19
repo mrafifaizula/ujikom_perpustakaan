@@ -47,5 +47,6 @@ class PeminjamanBuku extends Model
     {
         return $this->hasMany(Denda::class, 'id_peminjaman');
     }
+    
 
 }

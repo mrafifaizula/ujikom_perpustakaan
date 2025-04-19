@@ -1,8 +1,6 @@
 @extends('layouts.frontend')
 
-<style>
-
-</style>
+@section('title', 'Detail Buku')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y mt-5">

@@ -1,264 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
+    data-assets-path="../assets/" data-template="vertical-menu-template-free">
 
 <head>
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/assalaam2.png') }}">
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/assalaam2.png') }}">
-    <title>Perpustakaan Smk Assalaam</title>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Login - BOOKSAW</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Stylesheet -->
-    <style media="screen">
-        *,
-        *:before,
-        *:after {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
+    <meta name="description" content="" />
 
-        body {
-            background-color: #080710;
-            overflow: hidden;
-        }
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('front/assets/images/main-logo.png') }}" />
 
-        .wave {
-            background: rgb(255 255 255 / 25%);
-            border-radius: 1000% 1000% 0 0;
-            position: fixed;
-            width: 200%;
-            height: 12em;
-            animation: wave 10s -3s linear infinite;
-            transform: translate3d(0, 0, 0);
-            opacity: 0.8;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-        }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
 
-        .wave:nth-of-type(2) {
-            bottom: -1.25em;
-            animation: wave 18s linear reverse infinite;
-            opacity: 0.8;
-        }
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{ asset('profil/assets/vendor/fonts/boxicons.css') }}" />
 
-        .wave:nth-of-type(3) {
-            bottom: -2.5em;
-            animation: wave 20s -1s reverse infinite;
-            opacity: 0.9;
-        }
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ asset('profil/assets/vendor/css/core.css') }}"
+        class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('profil/assets/vendor/css/theme-default.css') }}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('profil/assets/css/demo.css') }}" />
 
-        @keyframes wave {
-            2% {
-                transform: translateX(1);
-            }
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ asset('profil/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-            25% {
-                transform: translateX(-25%);
-            }
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="{{ asset('profil/assets/vendor/css/pages/page-auth.css') }}" />
 
-            50% {
-                transform: translateX(-50%);
-            }
-
-            75% {
-                transform: translateX(-25%);
-            }
-
-            100% {
-                transform: translateX(1);
-            }
-        }
-
-        .background {
-            width: 430px;
-            height: 520px;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            left: 50%;
-            top: 50%;
-        }
-
-        .background .shape {
-            height: 200px;
-            width: 200px;
-            position: absolute;
-            border-radius: 50%;
-        }
-
-        .shape:first-child {
-            background: linear-gradient(#1845ad, #23a2f6);
-            left: -80px;
-            top: -80px;
-        }
-
-        .shape:last-child {
-            background: linear-gradient(to right, #ff512f, #f09819);
-            right: -30px;
-            bottom: -80px;
-        }
-
-        form {
-            height: 520px;
-            width: 400px;
-            background-color: rgba(255, 255, 255, 0.13);
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-            padding: 50px 35px;
-        }
-
-        form * {
-            font-family: 'Poppins', sans-serif;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            outline: none;
-            border: none;
-        }
-
-        form h3 {
-            font-size: 32px;
-            font-weight: 500;
-            line-height: 42px;
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-top: 30px;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        input {
-            display: block;
-            height: 50px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.07);
-            border-radius: 3px;
-            padding: 0 10px;
-            margin-top: 8px;
-            font-size: 14px;
-            font-weight: 300;
-        }
-
-        ::placeholder {
-            color: #e5e5e5;
-        }
-
-        button {
-            margin-top: 50px;
-            width: 100%;
-            background-color: #ffffff;
-            color: #080710;
-            padding: 15px 0;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .social {
-            margin-top: 30px;
-            display: flex;
-            gap: 25px;
-        }
-
-        .social div {
-            background: red;
-            width: 150px;
-            border-radius: 3px;
-            padding: 5px 10px 10px 5px;
-            background-color: rgba(255, 255, 255, 0.27);
-            color: #eaf0fb;
-            text-align: center;
-        }
-
-        .social div:hover {
-            background-color: rgba(255, 255, 255, 0.47);
-        }
-
-        .social .go {
-            margin-left: 25px;
-        }
-
-        .social i {
-            margin-right: 4px;
-        }
-
-        .register-link {
-            margin-top: 20px;
-            text-align: center;
-            color: #ffffff;
-        }
-
-        .register-link a {
-            color: #ff512f;
-            /* Warna tautan */
-            text-decoration: none;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <script src="{{ asset('profil/assets/vendor/js/helpers.js') }}"></script>
+    <script src="{{ asset('profil/assets/js/config.js') }}"></script>
 </head>
 
 <body>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Logo -->
+                        <div class="app-brand justify-content-center">
+                            <a href="{{ url('/') }}" class="app-brand-link gap-2">
+                                <span class="app-brand-text demo text-body fw-bolder">BOOKSAW</span>
+                            </a>
+                        </div>
+                        <!-- /Logo -->
+
+                        <h4 class="mb-2">Selamat Datang Kembali! 👋</h4>
+                        <p class="mb-4">Silakan masuk ke akun Anda dan mulai petualangan</p>
+
+                        <form id="formAuthentication" action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="Enter your email"
+                                    value="{{ old('email') }}" autofocus />
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3 form-password-toggle">
+                                <div class="d-flex justify-content-between">
+                                    <label class="form-label" for="password">Password</label>
+                                    @if (Route::has('password.request'))
+                                        <a href="{{ route('password.request') }}">
+                                            <small>Forgot Password?</small>
+                                        </a>
+                                    @endif
+                                </div>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                </div>
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                            </div>
+                        </form>
+
+                        <p class="text-center">
+                            <span>Belum punya akun?</span>
+                            <a href="{{ route('register') }}">
+                                <span>Daftar di sini</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <form role="form" action="{{ route('login') }}" method="POST">
-        @csrf
-        <h3>Login</h3>
-        <div class="mb-3">
-            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
-                name="email" placeholder="Email" />
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
-                name="password" placeholder="Password" aria-describedby="password" />
-            @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
 
-        <div class="password" style="margin-top: 10px">
-            @if (Route::has('password.request'))
-                <a class="btn btn-link" href="{{ route('password.request') }}">
-                    {{ __('Lupa Password?') }}
-                </a>
-            @endif
-        </div>
-
-        <button type="submit">Log In</button>
-        <div class="social">
-            <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
-            <div class="google"> <a href="{{ url('login/google') }}"><i class="bi bi-google"></i> Google</a></div>
-        </div>        
-        <div class="register-link">
-            <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
-        </div>
-    </form>
+    <!-- Core JS -->
+    <script src="{{ asset('profil/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('profil/assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('profil/assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('profil/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('profil/assets/vendor/js/menu.js') }}"></script>
+    <script src="{{ asset('profil/assets/js/main.js') }}"></script>
 </body>
 
 </html>

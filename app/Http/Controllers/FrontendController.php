@@ -66,7 +66,7 @@ class FrontendController extends Controller
         $buku = Buku::all();
         $kategori = Kategori::all();
         $user = Auth::user();
-        $favorit = $user->Favorit()->pluck('id_buku')->toArray();
+        $favorit = Auth::check() ? Auth::user()->Favorit()->pluck('id_buku')->toArray() : [];
 
         return view('frontend.buku.daftar', compact('buku', 'kategori', 'user', 'favorit'));
     }
@@ -203,6 +203,7 @@ class FrontendController extends Controller
         return view('frontend.ulasan', compact('peminjamanBuku', 'user'));
     }
 
+    // input ulasan
     public function inputUlasan(Request $request)
     {
         $validated = $request->validate([

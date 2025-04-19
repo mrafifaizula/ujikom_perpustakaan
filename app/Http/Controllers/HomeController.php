@@ -136,7 +136,7 @@ class HomeController extends Controller
             ->count();
         $pengembalianHariIni = PengembalianBuku::whereDate('created_at', $today)
             ->count();
-        $jatuhTempo = Denda::count();
+        $jatuhTempo = Denda::where('statusPembayaran', 'belum')->count();
 
 
         if ($user->role === 'admin') {
@@ -144,7 +144,7 @@ class HomeController extends Controller
         } elseif ($user->role === 'staf') {
             return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
         } else {
-            return view('frontend.home', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
+            return view('profil.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
         }
     }
 }

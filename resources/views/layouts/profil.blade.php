@@ -32,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('profil/assets/img/favicon/assalaam.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('front/assets/images/main-logo.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

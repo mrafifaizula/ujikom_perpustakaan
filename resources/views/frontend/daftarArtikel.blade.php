@@ -1,5 +1,8 @@
 @extends('layouts.frontend')
 
+@section('title', 'Daftar Artikel')
+
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('front/assets/css/styleBaru.css') }}">
 @endsection

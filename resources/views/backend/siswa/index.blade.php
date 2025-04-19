@@ -20,14 +20,14 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="myTable1" class="table">
+                            <table id="tablePeminjaman" class="table">
                                 <thead>
                                     <tr>
                                         <th class="text-left" scope="col">#</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Nis</th>
-                                        <th scope="col">Nomor</th>
+                                        <th scope="col">Nomor Hanphone</th>
                                         <th scope="col" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>

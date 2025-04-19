@@ -1,8 +1,6 @@
 @extends('layouts.frontend')
 
-<style>
-
-</style>
+@section('title', 'Buku Favorit')
 
 @section('content')
     <section id="daftar-buku" class="bookshelf py-5 my-5">

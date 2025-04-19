@@ -88,6 +88,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'cek.denda.telat', '
 
     // pembayaran manual
     Route::post('danda/pembayaran-manual', [BackendController::class, 'pembayaranDendaManual'])->name('pembayaran.manual');
+    Route::get('history-pembayaran', [BackendController::class, 'histoyPembayaran']);
 
 });
 
@@ -112,12 +113,6 @@ Route::group(['prefix' => 'profil', 'middleware' => ['auth', 'cek.denda.telat']]
 
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
-    Route::get('home', [FrontendController::class, 'home']);
-    Route::get('daftar-buku', [FrontendController::class, 'daftarBuku']);
-    Route::get('detail-buku/{judul}', [FrontendController::class, 'detailBuku']);
-
-    Route::get('daftar-artikel', [FrontendController::class, 'daftarArtikel']);
-
     // peminjaman buku
     Route::get('pinjam-buku/{judul}', [FrontendController::class, 'showPinjamBuku']);
     Route::post('pinjam-buku/{judul}', [FrontendController::class, 'pinjamBuku'])->name('pinjam.buku');
@@ -131,6 +126,14 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
     Route::get('riwayat-peminjaman', [FrontendController::class, 'riwayat'])->name('riwayat.peminjaman');
     Route::get('ulasan/{id}', [FrontendController::class, 'ulasan']);
     Route::post('ulasan', [FrontendController::class, 'inputUlasan'])->name('input.ulasan');
+});
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('home', [FrontendController::class, 'home'])->name('user.home');
+    Route::get('daftar-buku', [FrontendController::class, 'daftarBuku']);
+    Route::get('detail-buku/{judul}', [FrontendController::class, 'detailBuku']);
+    Route::get('daftar-artikel', [FrontendController::class, 'daftarArtikel']);
+
 });
 
 
