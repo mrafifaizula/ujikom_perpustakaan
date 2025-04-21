@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function profile(Request $request)
+    {
+        return response()->json($request->user());
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [

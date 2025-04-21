@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
         "maatwebsite/excel": "^1.1",
+        "midtrans/midtrans-php": "^2.6",
         "realrashid/sweet-alert": "^7.2"
     },
     "require-dev": {

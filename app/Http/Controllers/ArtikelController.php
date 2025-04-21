@@ -178,7 +178,6 @@ class ArtikelController extends Controller
         return redirect()->route('artikel.index'); // Ganti kalau route-nya beda
     }
 
-
     public function exportCsv()
     {
         $fileName = 'artikel.csv';

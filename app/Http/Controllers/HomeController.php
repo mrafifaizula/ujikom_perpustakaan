@@ -139,12 +139,30 @@ class HomeController extends Controller
         $jatuhTempo = Denda::where('statusPembayaran', 'belum')->count();
 
 
+        $jumlahBukuDipinjamUser = PeminjamanBuku::where('status', 'diterima')
+            ->where('id_user', $user->id)
+            ->count();
+
+        $jumlahRiwaytPeminajamUser = PeminjamanBuku::where('status', 'selesai')
+            ->where('id_user', $user->id)
+            ->count();
+
+        $totalDendaUser = DB::table('dendas')
+            ->join('peminjaman_bukus', 'dendas.id_peminjaman', '=', 'peminjaman_bukus.id')
+            ->where('peminjaman_bukus.id_user', $user->id)
+            ->sum(DB::raw('CAST(totalDenda AS UNSIGNED)'));
+
+        $jumlahMenungguPeminjamanUser = PeminjamanBuku::where('status', ['menunggu', 'ditahan'])
+            ->where('id_user', $user->id)
+            ->count();
+
+
         if ($user->role === 'admin') {
-            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
+            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan', 'jumlahBukuDipinjamUser', 'jumlahRiwaytPeminajamUser', 'totalDendaUser', 'jumlahMenungguPeminjamanUser'));
         } elseif ($user->role === 'staf') {
-            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
+            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan', 'jumlahBukuDipinjamUser', 'jumlahRiwaytPeminajamUser', 'totalDendaUser', 'jumlahMenungguPeminjamanUser'));
         } else {
-            return view('profil.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan'));
+            return view('profil.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo', 'totalPendapatan', 'jumlahBukuDipinjamUser', 'jumlahRiwaytPeminajamUser', 'totalDendaUser', 'jumlahMenungguPeminjamanUser'));
         }
     }
 }

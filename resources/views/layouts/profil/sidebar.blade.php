@@ -12,7 +12,6 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <!-- Dashboard -->
         <li class="menu-item {{ request()->is('profil/dashboard') ? 'active' : '' }}">
             <a href="{{ url('profil/dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -24,7 +23,6 @@
             <span class="menu-header-text">Pages</span>
         </li>
 
-        {{-- profil --}}
         <li class="menu-item {{ request()->is('profil/profil') ? 'active' : '' }}">
             <a href="{{ url('profil/profil') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-user-circle'></i>
@@ -32,23 +30,7 @@
             </a>
         </li>
 
-        {{-- daftar buku --}}
-        {{-- <li class="menu-item {{ request()->is('profil/daftar-buku') ? 'active' : '' }}">
-            <a href="{{ url('profil/daftar-buku') }}" class="menu-link">
-                <i class='menu-icon tf-icons bx bx-book-alt'></i>
-                <div data-i18n="Analytics">Daftar buku</div>
-            </a>
-        </li> --}}
 
-        {{-- buku favorit --}}
-        {{-- <li class="menu-item {{ request()->is('profil/buku-favorit/' . $profil->name) ? 'active' : '' }}">
-            <a href="{{ url('profil/buku-favorit/' . $profil->name) }}" class="menu-link">
-                <i class='menu-icon tf-icons bx bx-book-heart'></i>
-                <div data-i18n="Analytics">Buku favorit</div>
-            </a>
-        </li> --}}
-
-        {{-- data peminjaman --}}
         <li class="menu-item {{ request()->is('profil/data-peminjaman/' . $user->name) ? 'active' : '' }}">
             <a href="{{ url('profil/data-peminjaman/' . $user->name) }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-check-circle'></i>
@@ -60,6 +42,13 @@
             <a href="{{ url('profil/denda/' . $user->name) }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-money'></i>
                 <div data-i18n="Analytics">Denda</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->is('profil/history-pembayaran/' . $user->name) ? 'active' : '' }}">
+            <a href="{{ url('profil/history-pembayaran/' . $user->name) }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-receipt'></i>
+                <div data-i18n="Analytics">history Pembayaran</div>
             </a>
         </li>
     </ul>

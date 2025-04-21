@@ -19,4 +19,9 @@ class Denda extends Model
     {
         return $this->hasMany(PembayaranManual::class, 'id_denda');
     }
+
+    public function Pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_denda');
+    }
 }

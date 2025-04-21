@@ -24,12 +24,11 @@
                                         <th>Telat Hari</th>
                                         <th>Total Denda</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php $no = 1; @endphp
-                                    @foreach ($dendaUser as $item)
+                                    @foreach ($historyPembayaranUser as $item)
                                         <tr>
                                             <th class="text-left" scope="row">{{ $no++ }}</th>
                                             <td>{{ $item->peminjamanBuku->user->name }}</td>
@@ -48,14 +47,6 @@
                                                     {{ ucfirst($item->statusPembayaran) }}
                                                 </button>
                                             </td>
-                                            <td>
-                                                @if ($item->statusPembayaran == 'belum')
-                                                    <button class="btn btn-sm btn-primary bayar"
-                                                        data-id="{{ $item->id }}">
-                                                        Bayar
-                                                    </button>
-                                                @endif
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -67,48 +58,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
-    </script>
-    <script type="text/javascript">
-        $(document).on('click', '.bayar', function() {
-            var idDenda = $(this).data('id');
-
-            $.ajax({
-                url: '{{ route('profil.snap.token') }}',
-                type: 'POST',
-                data: {
-                    id_denda: idDenda,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.token) {
-                        snap.pay(response.token, {
-                            onSuccess: function(result) {
-                                alert('Pembayaran berhasil!');
-                                location.reload();
-                            },
-                            onPending: function(result) {
-                                alert('Pembayaran sedang diproses...');
-                            },
-                            onError: function(result) {
-                                alert('Pembayaran gagal!');
-                                console.error(result);
-                            },
-                            onClose: function() {
-                                alert('Kamu menutup popup tanpa menyelesaikan pembayaran.');
-                            }
-                        });
-                    } else {
-                        alert('Token tidak valid');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error:", status, error);
-                    alert('Terjadi kesalahan saat mendapatkan token pembayaran.');
-                }
-            });
-        });
-    </script>
-@endpush

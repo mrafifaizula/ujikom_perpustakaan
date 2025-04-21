@@ -95,7 +95,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'cek.denda.telat', '
 
 Route::group(['prefix' => 'profil', 'middleware' => ['auth', 'cek.denda.telat']], function () {
     Route::get('dashboard', [ProfilController::class, 'dashboard']);
-    Route::get('profil', [ProfilController::class, 'profil']);
+
+    Route::get('/profil', [ProfilController::class, 'profil'])->name('profil.index');
+    Route::put('/profil', [ProfilController::class, 'updateProfil'])->name('profil.update');
+    Route::delete('/profil', [ProfilController::class, 'delateUser'])->name('profil.destroy');
 
     // pengembalian buku
     Route::post('ajukan-pengembalian/{id}', [ProfilController::class, 'ajukanPengembalian'])->name('ajukan.pengembalian');
@@ -109,7 +112,14 @@ Route::group(['prefix' => 'profil', 'middleware' => ['auth', 'cek.denda.telat']]
 
     // denda
     Route::get('denda/{name}', [ProfilController::class, 'dendaUser']);
+    // history pembayaran
+    Route::get('history-pembayaran/{name}', [ProfilController::class, 'historyPembayaranUser']);
+
+    Route::post('/snap-token', [ProfilController::class, 'getSnapToken'])->name('profil.snap.token');
 });
+
+Route::post('midtrans/callback', [ProfilController::class, 'handleMidtransCallback']);
+
 
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {

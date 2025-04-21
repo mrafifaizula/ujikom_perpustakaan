@@ -85,3 +85,49 @@ $(document).ready(function () {
         ],
     });
 });
+
+// alert data peminajaman
+function konfirmasiPengembalian(id) {
+    Swal.fire({
+        title: "Ajukan pengembalian?",
+        text: "Yakin ingin mengembalikan buku ini?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Ya, ajukan!",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(`form-pengembalian-${id}`).submit();
+        }
+    });
+}
+
+function konfirmasiPembatalan(id) {
+    Swal.fire({
+        title: "Batalkan pengembalian?",
+        text: "Yakin ingin membatalkan permintaan pengembalian?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, batalkan!",
+        cancelButtonText: "Tidak",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(`form-batal-pengembalian-${id}`).submit();
+        }
+    });
+}
+
+function konfirmasiPembatalanPeminjaman(id) {
+    Swal.fire({
+        title: "Batalkan peminjaman?",
+        text: "Yakin ingin membatalkan permintaan peminjaman buku ini?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, batalkan!",
+        cancelButtonText: "Tidak",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(`form-batal-peminjaman-${id}`).submit();
+        }
+    });
+}
