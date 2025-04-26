@@ -40,7 +40,12 @@ class PeminjamanBuku extends Model
     // PeminjamanBuku.php
     public function pengembalianBuku()
     {
-        return $this->hasMany(PengembalianBuku::class , 'id_peminjaman');
+        return $this->hasMany(PengembalianBuku::class, 'id_peminjaman');
+    }
+
+    public function denda()
+    {
+        return $this->hasMany(Denda::class, 'id_peminjaman');
     }
 
 }

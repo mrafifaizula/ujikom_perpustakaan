@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PeminjamanBuku;
 use App\Models\Penerbit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,9 +18,10 @@ class PenerbitController extends Controller
     {
         $penerbit = Penerbit::orderBy("id", "desc")->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.penerbit.index', compact('penerbit', 'user'));
+        return view('backend.penerbit.index', compact('penerbit', 'user', 'notifPengajuanSidebar'));
     }
 
 
@@ -107,8 +109,9 @@ class PenerbitController extends Controller
     {
         $penerbit = Penerbit::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.penerbit.importExcel', compact('penerbit', 'user'));
+        return view('backend.penerbit.importExcel', compact('penerbit', 'user', 'notifPengajuanSidebar'));
     }
 
     public function importExcel(Request $request)

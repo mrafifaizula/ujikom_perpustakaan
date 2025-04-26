@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artikel;
 use App\Models\Kategori;
 use App\Models\Ulasan;
 use Auth;
@@ -52,8 +53,10 @@ class FrontendController extends Controller
             });
 
         $bukuTerbaru = Buku::orderBy('created_at', 'desc')->take(3)->get();
+        $artikelTerbaru = Artikel::orderBy('created_at', 'desc')->take(3)->get();
+        $bukuCoursel = Buku::orderBy('created_at', 'desc')->take(5)->get();
 
-        return view('frontend.home', compact('buku', 'user', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru'));
+        return view('frontend.home', compact('buku', 'user', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel'));
     }
 
     // dafttar buku

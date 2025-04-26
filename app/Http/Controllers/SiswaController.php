@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\kelas;
+use App\Models\PeminjamanBuku;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,10 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::orderBy("id", "desc")->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.siswa.index', compact('siswa', 'user'));
+        return view('backend.siswa.index', compact('siswa', 'user', 'notifPengajuanSidebar'));
     }
 
 
@@ -28,8 +30,9 @@ class SiswaController extends Controller
         $siswa = Siswa::all();
         $kelas = kelas::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.siswa.create', compact('siswa', 'kelas', 'user'));
+        return view('backend.siswa.create', compact('siswa', 'kelas', 'user', 'notifPengajuanSidebar'));
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\PeminjamanBuku;
 use App\Models\Penulis;
 use App\Models\Penerbit;
 use App\Models\Kategori;
@@ -24,9 +25,10 @@ class BukuController extends Controller
         $penulis = Penulis::all();
         $penerbit = Penerbit::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.buku.index', compact('buku', 'kategori', 'penulis', 'penerbit', 'user'));
+        return view('backend.buku.index', compact('buku', 'kategori', 'penulis', 'penerbit', 'user', 'notifPengajuanSidebar'));
     }
 
     public function create()
@@ -36,8 +38,9 @@ class BukuController extends Controller
         $penulis = Penulis::all();
         $penerbit = Penerbit::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.buku.create', compact('buku', 'kategori', 'penulis', 'penerbit', 'user'));
+        return view('backend.buku.create', compact('buku', 'kategori', 'penulis', 'penerbit', 'user', 'notifPengajuanSidebar'));
     }
 
     public function store(Request $request)
@@ -87,8 +90,9 @@ class BukuController extends Controller
     {
         $buku = Buku::findorfail($id);
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.buku.detail', compact('buku', 'user'));
+        return view('backend.buku.detail', compact('buku', 'user', 'notifPengajuanSidebar'));
     }
 
     public function edit($id)
@@ -98,8 +102,9 @@ class BukuController extends Controller
         $penulis = Penulis::all();
         $penerbit = Penerbit::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.buku.edit', compact('buku', 'kategori', 'penulis', 'penerbit', 'user'));
+        return view('backend.buku.edit', compact('buku', 'kategori', 'penulis', 'penerbit', 'user', 'notifPengajuanSidebar'));
     }
 
     public function update(Request $request, $id)
@@ -161,8 +166,9 @@ class BukuController extends Controller
     {
         $buku = Buku::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.buku.importExcel', compact('buku', 'user'));
+        return view('backend.buku.importExcel', compact('buku', 'user', 'notifPengajuanSidebar'));
     }
 
     public function importExcel(Request $request)

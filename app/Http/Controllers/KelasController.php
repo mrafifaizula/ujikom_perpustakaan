@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use App\Models\kelas;
+use App\Models\PeminjamanBuku;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +17,11 @@ class KelasController extends Controller
     {
         $kelas = Kelas::orderBy("id", "desc")->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.kelas.index', compact('kelas', 'user'));
+        return view('backend.kelas.index', compact('kelas', 'user', 'notifPengajuanSidebar'));
     }
 
 
@@ -106,8 +109,9 @@ class KelasController extends Controller
     {
         $kelas = Kategori::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.kelas.importExcel', compact('kelas', 'user'));
+        return view('backend.kelas.importExcel', compact('kelas', 'user', 'notifPengajuanSidebar'));
     }
 
     public function importExcel(Request $request)

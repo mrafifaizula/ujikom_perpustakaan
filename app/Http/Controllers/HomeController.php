@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artikel;
 use App\Models\Buku;
+use App\Models\Denda;
+use App\Models\PengembalianBuku;
 use App\Models\Penulis;
 use App\Models\Penerbit;
 use App\Models\Kategori;
 use App\Models\PeminjamanBuku;
 use App\Models\siswa;
+use App\Models\Ulasan;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -31,6 +37,10 @@ class HomeController extends Controller
         $penerbit = Penerbit::all();
         $kategori = Kategori::all();
         $peminjamanBuku = PeminjamanBuku::all();
+        $totalUlasan = Ulasan::count();
+        $totalPeminjaman = PeminjamanBuku::where('status', 'diterima')->count();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
 
 
         // chart
@@ -39,7 +49,7 @@ class HomeController extends Controller
         $penerbitCount = Penerbit::count();
         $kategoriCount = Kategori::count();
         $siswaCount = siswa::count();
-        $bukuYangDipinjam = PeminjamanBuku::where('status', 'terima')->count();
+        $totalStaf = User::where('role', 'staf')->count();
 
         $peminjamanPerBulan = PeminjamanBuku::where('status', 'selesai')
             ->selectRaw('MONTH(created_at) as bulan, COUNT(*) as total')
@@ -83,12 +93,57 @@ class HomeController extends Controller
         $favorit = $user->Favorit()->pluck('id')->toArray();
 
 
+        $bukuPalingBanyakDipinjam = DB::table('peminjaman_bukus')
+            ->select('id_buku', DB::raw('count(*) as total'))
+            ->where('status', 'selesai')
+            ->groupBy('id_buku')
+            ->orderByDesc('total')
+            ->limit(8)
+            ->get();
+
+        $bukuTerlaris = Buku::whereIn('id', $bukuPalingBanyakDipinjam->pluck('id_buku'))
+            ->get()
+            ->sortByDesc(function ($item) use ($bukuPalingBanyakDipinjam) {
+                $total = $bukuPalingBanyakDipinjam->firstWhere('id_buku', $item->id)->total;
+                return $total;
+            });
+
+        $bukuPalingBanyakDipinjam2 = DB::table('peminjaman_bukus')
+            ->select('id_buku', DB::raw('count(*) as total'))
+            ->where('status', 'selesai')
+            ->groupBy('id_buku')
+            ->orderByDesc('total')
+            ->limit(1)
+            ->get();
+
+        $bukuPopuler = Buku::whereIn('id', $bukuPalingBanyakDipinjam2->pluck('id_buku'))
+            ->get()
+            ->sortByDesc(function ($item) use ($bukuPalingBanyakDipinjam2) {
+                $total = $bukuPalingBanyakDipinjam2->firstWhere('id_buku', $item->id)->total;
+                return $total;
+            });
+
+        $bukuTerbaru = Buku::orderBy('created_at', 'desc')->take(3)->get();
+        $artikelTerbaru = Artikel::orderBy('created_at', 'desc')->take(3)->get();
+        $bukuCoursel = Buku::orderBy('created_at', 'desc')->take(5)->get();
+        $totalDenda = Denda::sum('totalDenda');
+
+        $today = Carbon::today();
+        $userBaruHariIni = User::whereDate('created_at', $today)->count();
+        $peminjamanHariIni = PeminjamanBuku::whereDate('created_at', $today)
+            ->where('status', 'diterima')
+            ->count();
+        $pengembalianHariIni = PengembalianBuku::whereDate('created_at', $today)
+            ->count();
+        $jatuhTempo = Denda::count();
+
+
         if ($user->role === 'admin') {
-            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'bukuYangDipinjam', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'jumlahPinjamBukuHariIni', 'jumlahPengembalianBukuHariIni', 'favorit'));
+            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
         } elseif ($user->role === 'staf') {
-            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'bukuYangDipinjam', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'jumlahPinjamBukuHariIni', 'jumlahPengembalianBukuHariIni', 'favorit'));
+            return view('backend.dashboard', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
         } else {
-            return view('frontend.home', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'bukuYangDipinjam', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'jumlahPinjamBukuHariIni', 'jumlahPengembalianBukuHariIni', 'favorit'));
+            return view('frontend.home', compact('user', 'buku', 'penulis', 'penerbit', 'kategori', 'peminjamanBuku', 'bukuCount', 'penulisCount', 'penerbitCount', 'siswaCount', 'totalStaf', 'kategoriCount', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'favorit', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'bukuTerlaris', 'bukuPopuler', 'bukuTerbaru', 'artikelTerbaru', 'bukuCoursel', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
         }
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Denda;
 use App\Models\Favorit;
 use App\Models\siswa;
+use App\Models\Ulasan;
+use App\Models\User;
 use Auth;
 use App\Models\Buku;
 use App\Models\Kategori;
@@ -25,7 +28,20 @@ class BackendController extends Controller
         $penerbitCount = Penerbit::count();
         $kategoriCount = Kategori::count();
         $siswaCount = siswa::count();
-        $bukuYangDipinjam = PeminjamanBuku::where('status', 'terima')->count();
+        $totalStaf = User::where('role', 'staf')->count();
+        $totalUlasan = Ulasan::count();
+        $totalPeminjaman = PeminjamanBuku::where('status', 'diterima')->count();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+        $totalDenda = Denda::sum('totalDenda');
+
+        $today = Carbon::today();
+        $userBaruHariIni = User::whereDate('created_at', $today)->count();
+        $peminjamanHariIni = PeminjamanBuku::whereDate('created_at', $today)
+            ->where('status', 'diterima')
+            ->count();
+        $pengembalianHariIni = PengembalianBuku::whereDate('created_at', $today)
+            ->count();
+        $jatuhTempo = Denda::count();
 
         $peminjamanPerBulan = PeminjamanBuku::where('status', 'selesai')
             ->selectRaw('MONTH(created_at) as bulan, COUNT(*) as total')
@@ -58,15 +74,7 @@ class BackendController extends Controller
         $bulan = $namaBulanLengkap[$tanggalSekarang->month];
         $tanggalFormat = $tanggalSekarang->day . ' ' . $bulan . ' ' . $tanggalSekarang->year;
 
-        $jumlahPinjamBukuHariIni = PeminjamanBuku::whereIn('status', ['diterima', 'menunggu', 'ditolak'])
-            ->whereDate('created_at', Carbon::today())
-            ->count();
-
-        $jumlahPengembalianBukuHariIni = PeminjamanBuku::where('status', ['selesai'])
-            ->whereDate('created_at', Carbon::today())
-            ->count();
-
-        return view('backend.dashboard', compact('bukuCount', 'penulisCount', 'penerbitCount', 'kategoriCount', 'siswaCount', 'bukuYangDipinjam', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'jumlahPinjamBukuHariIni', 'jumlahPengembalianBukuHariIni', 'user'));
+        return view('backend.dashboard', compact('bukuCount', 'penulisCount', 'penerbitCount', 'kategoriCount', 'siswaCount', 'totalStaf', 'dataGrafik', 'bulanArray', 'tanggalFormat', 'user', 'totalUlasan', 'totalPeminjaman', 'notifPengajuanSidebar', 'totalDenda', 'userBaruHariIni', 'peminjamanHariIni', 'pengembalianHariIni', 'jatuhTempo'));
     }
 
 
@@ -75,8 +83,9 @@ class BackendController extends Controller
     {
         $peminjamanBuku = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.pengajuanPeminjaman', compact('peminjamanBuku', 'user'));
+        return view('backend.pengajuanPeminjaman', compact('peminjamanBuku', 'user', 'notifPengajuanSidebar'));
     }
 
 
@@ -115,16 +124,18 @@ class BackendController extends Controller
     {
         $peminjamanBuku = PeminjamanBuku::where('status', 'diterima')->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.daftarBukuDipinjam', compact('peminjamanBuku', 'user'));
+        return view('backend.daftarBukuDipinjam', compact('peminjamanBuku', 'user', 'notifPengajuanSidebar'));
     }
 
     public function historyPeminjaman()
     {
         $peminajamanBuku = PeminjamanBuku::whereIn('status', ['ditolak', 'selesai'])->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.historyPeminjaman', compact('peminajamanBuku', 'user'));
+        return view('backend.historyPeminjaman', compact('peminajamanBuku', 'user', 'notifPengajuanSidebar'));
     }
 
 
@@ -165,10 +176,22 @@ class BackendController extends Controller
     }
 
     // data ulasan
-    public function dataUlsan()
+    public function dataUlasan()
     {
-        
+        $ulasan = Ulasan::all();
+        $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
+        return view('backend.dataUlasan', compact('ulasan', 'user', 'notifPengajuanSidebar'));
     }
 
+    public function dataDenda()
+    {
+        $denda = Denda::all();
+        $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
+        return view('backend.denda.index', compact('denda', 'user', 'notifPengajuanSidebar'));
+    }
 
 }

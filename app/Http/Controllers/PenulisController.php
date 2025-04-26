@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PeminjamanBuku;
 use App\Models\Penulis;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,9 +17,11 @@ class PenulisController extends Controller
     {
         $penulis = Penulis::orderBy("id", "desc")->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
+
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.penulis.index', compact('penulis', 'user'));
+        return view('backend.penulis.index', compact('penulis', 'user', 'notifPengajuanSidebar'));
     }
 
 
@@ -106,8 +109,9 @@ class PenulisController extends Controller
     {
         $penulis = Penulis::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.penulis.importExcel', compact('penulis', 'user'));
+        return view('backend.penulis.importExcel', compact('penulis', 'user', 'notifPengajuanSidebar'));
     }
 
     public function importExcel(Request $request)

@@ -11,7 +11,7 @@
                     </button>
 
                     <div class="main-slider pattern-overlay slick-carousel">
-                        @foreach ($bukuTerlaris as $item)
+                        @foreach ($bukuCoursel as $item)
                             <div class="slider-item">
                                 <div class="banner-content">
                                     <h2 class="banner-title">{{ $item->judul }}</h2>
@@ -197,131 +197,53 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="section-header align-center">
                         <div class="title">
                             <span>Baca artikel kami</span>
                         </div>
                         <h2 class="section-title">Artikel Terbaru</h2>
                     </div>
-
                     <div class="row">
-
-                        <div class="col-md-4">
-
-                            <article class="column" data-aos="fade-up">
-
-                                <figure>
-                                    <a href="#" class="image-hvr-effect">
-                                        <img src="{{ asset('front/assets/images/post-img1.jpg') }}" alt="post"
-                                            class="post-image">
-                                    </a>
-                                </figure>
-
-                                <div class="post-item">
-                                    <div class="meta-date">Mar 30, 2021</div>
-                                    <h3><a href="#">Reading books always makes the moments happy</a></h3>
-
-                                    <div class="links-element">
-                                        <div class="categories">inspiration</div>
-                                        <div class="social-links">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-facebook"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-twitter"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-behance-square"></i></a>
-                                                </li>
-                                            </ul>
+                        @foreach ($artikelTerbaru as $item)
+                            <div class="col-md-4">
+                                <article class="column" data-aos="fade-up">
+                                    <figure>
+                                        <a href="#" class="image-hvr-effect">
+                                            <img src="{{ asset('images/artikel/' . $item->gambar) }}" alt="post"
+                                                class="post-image">
+                                        </a>
+                                    </figure>
+                                    <div class="post-item">
+                                        <div class="meta-date">{{ $item->created_at->format('M d, Y') }}</div>
+                                        <h3><a href="#">{{ $item->judul }}</a></h3>
+                                        <div class="links-element">
+                                            <div class="categories">Terbaru</div>
+                                            {{-- <div class="social-links">
+                                                <ul>
+                                                    <li>
+                                                        <a href="#"><i class="icon icon-facebook"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#"><i class="icon icon-twitter"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#"><i class="icon icon-behance-square"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div> --}}
                                         </div>
-                                    </div><!--links-element-->
-
-                                </div>
-                            </article>
-
-                        </div>
-                        <div class="col-md-4">
-
-                            <article class="column" data-aos="fade-up" data-aos-delay="200">
-                                <figure>
-                                    <a href="#" class="image-hvr-effect">
-                                        <img src="{{ asset('front/assets/images/post-img2.jpg') }}" alt="post"
-                                            class="post-image">
-                                    </a>
-                                </figure>
-                                <div class="post-item">
-                                    <div class="meta-date">Mar 29, 2021</div>
-                                    <h3><a href="#">Reading books always makes the moments happy</a></h3>
-
-                                    <div class="links-element">
-                                        <div class="categories">inspiration</div>
-                                        <div class="social-links">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-facebook"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-twitter"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-behance-square"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div><!--links-element-->
-
-                                </div>
-                            </article>
-
-                        </div>
-                        <div class="col-md-4">
-
-                            <article class="column" data-aos="fade-up" data-aos-delay="400">
-                                <figure>
-                                    <a href="#" class="image-hvr-effect">
-                                        <img src="{{ asset('front/assets/images/post-img3.jpg') }}" alt="post"
-                                            class="post-image">
-                                    </a>
-                                </figure>
-                                <div class="post-item">
-                                    <div class="meta-date">Feb 27, 2021</div>
-                                    <h3><a href="#">Reading books always makes the moments happy</a></h3>
-
-                                    <div class="links-element">
-                                        <div class="categories">inspiration</div>
-                                        <div class="social-links">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-facebook"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-twitter"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon icon-behance-square"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div><!--links-element-->
-
-                                </div>
-                            </article>
-
-                        </div>
-
+                                    </div>
+                                </article>
+                            </div>
+                        @endforeach
                     </div>
 
                     <div class="row">
-
                         <div class="btn-wrap align-center">
                             <a href="#" class="btn btn-outline-accent btn-accent-arrow" tabindex="0">Read All
                                 Articles<i class="icon icon-ns-arrow-right"></i></a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

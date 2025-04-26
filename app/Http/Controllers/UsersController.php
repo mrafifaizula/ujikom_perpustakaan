@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\PeminjamanBuku;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\user;
 use Illuminate\Http\Request;
@@ -13,16 +14,18 @@ class UsersController extends Controller
     public function index()
     {
         $user = User::all();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.user.index', compact('user'));
+        return view('backend.user.index', compact('user', 'notifPengajuanSidebar'));
     }
 
     public function create()
     {
         $user = User::all();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.user.create', compact('user'));
+        return view('backend.user.create', compact('user', 'notifPengajuanSidebar'));
     }
 
     public function store(Request $request)
@@ -52,8 +55,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.user.edit', compact('user'));
+        return view('backend.user.edit', compact('user', 'notifPengajuanSidebar'));
     }
 
     public function update(Request $request, $id)

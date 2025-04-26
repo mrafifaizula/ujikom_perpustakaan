@@ -1,11 +1,11 @@
 @extends('layouts.backend')
 
-@section('title', 'Data buku yang dipinjam')
+@section('title', 'History peminjaman')
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Ulsan Peminjaman</h1>
+            <h1>Denda Peminjaman Buku</h1>
         </div>
 
         <div class="section-body">
@@ -13,7 +13,7 @@
                 <div class="col-12 col-md-6 col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4>Data ulasan</h4>
+                            <h4>Data Denda Peminjaman Buku</h4>
                         </div>
 
                         <div class="card-body">
@@ -23,30 +23,32 @@
                                         <th class="text-left" scope="col">#</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Judul</th>
-                                        <th scope="col" class="text-center">Bintang</th>
-                                        <th scope="col">Pesan</th>
+                                        <th class="text-left" scope="col">Batas Peminjaman</th>
+                                        <th class="text-left" scope="col">Jenis Denda</th>
+                                        <th class="text-left" scope="col">Telat Hari</th>
+                                        <th class="text-left" scope="col">Total Denda</th>
+                                        <th class="text-left" scope="col">Status</th>
                                         <th scope="col" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 @php $no = 1; @endphp
                                 <tbody>
-                                    @foreach ($ulasan as $item)
+                                    @foreach ($denda as $item)
                                         <tr>
                                             <th class="text-left" scope="row">{{ $no++ }}</th>
-                                            <td>{{ $item->pengembalianBuku->peminjamanBuku->user->name }}</td>
-                                            <td>{{ $item->pengembalianBuku->peminjamanBuku->buku->judul }}</td>
-                                            <td class="text-center">
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($i <= $item->bintang)
-                                                        <i class="fas fa-star" style="color: gold;"></i>
-                                                    @else
-                                                        <i class="fas fa-star" style="color: lightgray;"></i>
-                                                    @endif
-                                                @endfor
+                                            <td>{{ $item->peminjamanBuku->user->name }}</td>
+                                            <td>{{ $item->peminjamanBuku->buku->judul }}</td>
+                                            <td class="text-left">{{ $item->peminjamanBuku->batasPeminjaman }}</td>
+                                            <td class="text-left">{{ $item->jenisDenda }}</td>
+                                            <td class="text-left">{{ $item->hariTelat }} Hari</td>
+                                            <td class="text-left">Rp {{ number_format($item->totalDenda, 0, ',', '.') }}
                                             </td>
-                                            <td
-                                                style="white-space: normal; word-wrap: break-word; max-width: 300px; text-align: justify;">
-                                                {{ $item->pesan }}
+                                            <td class="text-center">
+                                                @if ($item->statusPembayaran == 'belum')
+                                                    <div class="badge badge-danger">{{ $item->statusPembayaran }}</div>
+                                                @elseif($item->statusPembayaran == 'sudah')
+                                                    <div class="badge badge-success">{{ $item->statusPembayaran }}</div>
+                                                @endif
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"

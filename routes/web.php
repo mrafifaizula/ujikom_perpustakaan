@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfilController;
@@ -24,14 +25,9 @@ Auth::routes();
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-// Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
-// Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-// });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin,staf']], function (): void {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'cek.denda.telat', 'role:admin,staf']], function (): void {
     Route::get('dashboard', [BackendController::class, 'index']); // Menggunakan controller untuk 'dashboard'
 
     Route::resource('kategori', KategoriController::class);
@@ -41,6 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin,staf']],
     Route::resource('user', UsersController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('siswa', SiswaController::class);
+    Route::resource('artikel', ArtikelController::class);
 
     // pengajuan
     Route::get('pengajuan', [BackendController::class, 'viewPengajuan']);
@@ -78,7 +75,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin,staf']],
     Route::post('import/buku', [BukuController::class, 'importExcel'])->name('import.buku');
     Route::get('export/buku', [BukuController::class, 'exportCsv'])->name('export.buku');
 
+    // data ulasan
+    Route::get('data-ulasan', [BackendController::class, 'dataUlasan']);
 
+    // denda
+    Route::get('denda', [BackendController::class, 'dataDenda']);
 });
 
 

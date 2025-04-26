@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use App\Models\PeminjamanBuku;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,10 @@ class KategoriController extends Controller
     {
         $kategori = Kategori::orderBy("id", "desc")->get();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
         confirmDelete('Delete', 'Apakah Kamu Yakin?');
-        return view('backend.kategori.index', compact('kategori', 'user'));
+        return view('backend.kategori.index', compact('kategori', 'user', 'notifPengajuanSidebar'));
     }
 
     public function create()
@@ -100,8 +102,9 @@ class KategoriController extends Controller
     {
         $kategori = Kategori::all();
         $user = Auth::user();
+        $notifPengajuanSidebar = PeminjamanBuku::whereIn('status', ['ditahan', 'menunggu'])->count();
 
-        return view('backend.kategori.importExcel', compact('kategori', 'user'));
+        return view('backend.kategori.importExcel', compact('kategori', 'user', 'notifPengajuanSidebar'));
     }
 
     public function importExcel(Request $request)

@@ -1,0 +1,20 @@
+/* didebar nootif */
+.notif-badge {
+    position: absolute !important;
+    top: 14px !important;
+    right: 14px !important;
+    background-color: red !important;
+    color: white !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    text-align: center !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    z-index: 99 !important;
+}

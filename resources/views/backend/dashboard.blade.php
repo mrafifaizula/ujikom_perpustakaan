@@ -24,39 +24,39 @@
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-danger">
-                        <i class="far bi bi-book"></i>
+                        <i class="far bi bi-person-badge"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Buku Dipinjam</h4>
+                            <h4>Total Staff</h4>
                         </div>
-                        <div class="card-body">{{ $bukuYangDipinjam }}</div>
+                        <div class="card-body">{{ $totalStaf }}</div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-warning">
-                        <i class="far bi bi-book-half"></i>
+                        <i class="far bi-chat-left-text"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Data Buku</h4>
+                            <h4>Total Ulasan</h4>
                         </div>
-                        <div class="card-body">{{ $bukuCount }}</div>
+                        <div class="card-body">{{ $totalUlasan }}</div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-success">
-                        <i class="fas bi bi-stack"></i>
+                        <i class="fas bi bi-book"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Data Kategori</h4>
+                            <h4>Buku Dipinjam</h4>
                         </div>
-                        <div class="card-body">{{ $kategoriCount }}</div>
+                        <div class="card-body">{{ $totalPeminjaman }}</div>
                     </div>
                 </div>
             </div>
@@ -71,25 +71,25 @@
                             <div class="col-md-3">
                                 <i class="bi bi-person-plus-fill text-success mb-1" style="font-size: 20px;"></i>
                                 <p class="text-sm text-uppercase font-weight-bold mb-0">Pengguna Baru</p>
-                                <h5 class="font-weight-bolder">1</h5>
+                                <h5 class="font-weight-bolder">{{ $userBaruHariIni }}</h5>
                             </div>
 
                             <div class="col-md-3">
                                 <i class="bi bi-book-fill text-primary mb-1" style="font-size: 20px;"></i>
                                 <p class="text-sm text-uppercase font-weight-bold mb-0">Peminjaman</p>
-                                <h5 class="font-weight-bolder">{{ $jumlahPinjamBukuHariIni }}</h5>
+                                <h5 class="font-weight-bolder">{{ $peminjamanHariIni }}</h5>
                             </div>
 
                             <div class="col-md-3">
                                 <i class="bi bi-arrow-repeat text-info mb-1" style="font-size: 20px;"></i>
                                 <p class="text-sm text-uppercase font-weight-bold mb-0">Pengembalian</p>
-                                <h5 class="font-weight-bolder">{{ $jumlahPengembalianBukuHariIni }}</h5>
+                                <h5 class="font-weight-bolder">{{ $pengembalianHariIni }}</h5>
                             </div>
 
                             <div class="col-md-3">
                                 <i class="bi bi-exclamation-triangle-fill text-danger mb-1" style="font-size: 20px;"></i>
                                 <p class="text-sm text-uppercase font-weight-bold mb-0">Jatuh Tempo</p>
-                                <h5 class="font-weight-bolder">1</h5>
+                                <h5 class="font-weight-bolder">{{ $jatuhTempo }}</h5>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,8 @@
                         </h6>
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <div class="d-flex align-items-center">
-                                <h4 class="text-dark mb-0" style="font-size: 18px;">Rp 0</h4>
+                                <h4 class="text-dark mb-0" style="font-size: 18px;">Rp
+                                    {{ number_format($totalDenda, 0, ',', '.') }}</h4>
                             </div>
                             <div class="rounded-circle bg-danger d-flex justify-content-center align-items-center shadow-sm"
                                 style="width: 30px; height: 30px; position: relative;">
